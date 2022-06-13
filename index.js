@@ -1,10 +1,6 @@
 const app = require('express')();
-const https = require('https').Server(app);
-const io = require('socket.io')(https,{
-  cors:{
-    origin:"*"
-  }
-});
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 const moment = require('moment');
 const port = process.env.PORT || 3000;
 
@@ -33,7 +29,7 @@ io.on('connection', (socket) => {
   })
 });
 
-https.listen(port, () => {
+http.listen(port, () => {
   console.log(`Socket.IO server running at http://localhost:${port}/`);
 });
 
