@@ -25,9 +25,9 @@
     </script>
 
     <script>
-      const name = prompt("닉네임 입력asd:")
+      const name = prompt("닉네임?:")
       var socket = io();
-      socket.emit("joinRoom",`${name}`,"test1","test2","test3","test4")
+      socket.emit("joinRoom",`${name}`)
       var messages = document.getElementById('messages');
       var form = document.getElementById('form');
       var input = document.getElementById('input');

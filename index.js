@@ -8,21 +8,22 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
-
+let totalCount =0;
 io.on('connection', (socket) => {
+  totalCount++;
   let name =""
   const dateFormat = "YYYY-MM-DD HH:mm:ss"
   socket.on("joinRoom",(userName)=>{
     name = userName;
-    io.emit('chat message', `${userName}님이 입장했습니다.`);
+    io.emit('chat message', `${userName}님이 입장했습니다. 현재 접속유저수:${totalCount}`);
 })
   socket.on('chat message', msg => {
     io.emit('chat message', `${name}: ${msg} at ${moment(new Date()).format(dateFormat)}`);
   });
 
   socket.on("disconnect",()=>{
-    io.emit('chat message', `${name}님이 나갔습니다.`);
-
+    totalCount--;
+    io.emit('chat message', `${name}님이 나갔습니다. 현재 접속유저수:${totalCount}`);
   })
 });
 
