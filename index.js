@@ -1,13 +1,19 @@
 const app = require('express')();
 const https = require('https').Server(app);
-const io = require('socket.io')(https);
+const io = require('socket.io')(https,{
+  cors:{
+    origin:"*"
+  }
+});
 const moment = require('moment');
 const port = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
-
+app.get("/test",(req,res)=>{
+  res.send("완료")
+})
 let totalCount =0;
 io.on('connection', (socket) => {
   totalCount++;
